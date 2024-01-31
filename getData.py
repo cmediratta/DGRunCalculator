@@ -20,9 +20,8 @@ def getRatings(root):
   rtgs = []
 
   for child in tourneys:
-    if (child[7].text=="No"):
-      break
-    rtgs.append(int(child[6].text))
+    if (child[7].text=="Yes"):
+      rtgs.append(int(child[6].text))
 
   return rtgs
 
@@ -80,7 +79,6 @@ def getData(p, players):
       r = c[1][0]
   for c in r:
     if c.attrib == {'class': 'current-rating'}:
-
       r = c
       break
 
