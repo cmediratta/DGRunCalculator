@@ -49,8 +49,12 @@ def getTournamentPlayers(e_id, division, players):
   for i in range(1,len(r)-1):
     pdga_nums[r[i][0].text.split('#')[1]] = 0
 
+  to_del = []
   for p in pdga_nums:
-    getData(p, players)
+    if(not getData(p, players)):
+      to_del.append(p)
+  for p in to_del:
+    del pdga_nums[p]
 
   return pdga_nums
 
@@ -82,6 +86,9 @@ def getData(p, players):
       r = c
       break
 
+  if(r[0].tail==None):
+    return 0
+
   rtg = int(r[0].tail)
   rtgs = getRatings(root)
 
@@ -89,7 +96,7 @@ def getData(p, players):
 
   players[p] = (rtg, std, name)
 
-  return
+  return 1
 
 
 def getPlayers(dict_status):
