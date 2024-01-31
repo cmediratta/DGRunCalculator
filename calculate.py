@@ -1,5 +1,6 @@
 from statistics import NormalDist
 import math
+import time
 
 c = 1.5
 
@@ -30,6 +31,36 @@ def getWinOdds (p, o, h, s):
   sigma_s = (o[1] + p[1] - c) * h / 18 + c
 
   return 1 - NormalDist(mu=m, sigma=sigma_s).cdf(-m/math.sqrt(sigma_s)-s)
+
+
+def calculateRoundWinner (rounds, pdga_nums, dists):
+
+  current_best = 0
+  current_winner = ""
+  for p in pdga_nums:
+    s = sum(dists[p].samples(rounds))/rounds
+    if (current_best < s):
+      current_best = s
+      current_winner = p
+  return current_winner, current_best
+    
+
+
+def calculateTournament (N, rounds, players, pdga_nums):
+
+  dists = {}
+  for p in pdga_nums:
+    dists[p] = NormalDist(mu=players[p][0], sigma=players[p][1])
+
+  rtg_sum = 0
+  for n in range(N):
+
+    p, rtg = calculateRoundWinner(rounds, pdga_nums, dists)
+
+    pdga_nums[p]+=100/N
+    rtg_sum+=rtg/N
+
+  return rtg_sum
 
 
 
