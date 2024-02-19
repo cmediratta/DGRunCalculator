@@ -47,7 +47,7 @@ def getTournamentPlayers(e_id, division, players):
 
   pdga_nums = {}
   for i in range(1,len(r)-1):
-    pdga_nums[r[i][0].text.split('#')[1]] = 0
+    pdga_nums[r[i][0].text.split('#')[1][:-1]] = 0
 
   to_del = []
   for p in pdga_nums:
