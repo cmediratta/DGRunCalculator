@@ -74,6 +74,9 @@ def getData(p, players):
   tree = etree.parse(StringIO(html), parser=parser)
   root = tree.getroot()
 
+  if (root[1][2][1][0][0][0][0][1].text == "Join or renew today!"):
+    return 0
+
   print("Grabbing " + root[1][2][1][0][0][0][0][1].text)
   name = root[1][2][1][0][0][0][0][1].text.split('#')[0][:-1]
 
